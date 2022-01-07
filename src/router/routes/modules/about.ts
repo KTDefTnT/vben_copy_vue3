@@ -14,13 +14,30 @@ const dashboard: AppRouteRecordRaw = {
   },
   children: [
     {
-      path: 'index',
-      name: 'AboutPage',
+      path: 'menu1',
+      name: 'menu-1',
       component: () => import('src/views/system/about/index.vue'),
       meta: {
-        title: '关于',
+        title: 'menu-1',
         hideMenu: true,
       },
+      children: [{
+        path: 'menu1-1',
+        name: 'menu-1-1',
+        component: () => import('src/views/system/about/index.vue'),
+        meta: {
+          title: 'menu-1-1',
+          hideMenu: true,
+        }
+      }, {
+        path: 'menu1-2',
+        name: 'menu-1-2',
+        component: () => import('src/views/system/about/index.vue'),
+        meta: {
+          title: 'menu-1-2',
+          hideMenu: true,
+        }
+      }]
     },
   ],
 };

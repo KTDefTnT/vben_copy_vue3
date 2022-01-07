@@ -1,5 +1,6 @@
-import type { AxiosResponse } from "axios";
-import type { RequestOptions, Result } from "types/axios";
+import { useUserStore } from './../../store/modules/user';
+// import type { AxiosResponse } from "axios";
+// import type { RequestOptions, Result } from "types/axios";
 import type { AxiosTransform, CreateAxiosOptions } from "./transformTyping";
 import { VAxios } from "./createAxios";
 import { deepMerge } from "../utils";
@@ -28,14 +29,15 @@ const transform: AxiosTransform = {
 
   // 请求拦截器 处理
   requestInterceptors: (config, options) => {
+    const userStore = useUserStore();
     // ! 添加统一的token、统一处理 headers等 
-    // const token = getToken();
-    // if (token && (config as Recordable)?.requestOptions?.withToken !== false) {
-    //   // jwt token
-    //   (config as Recordable).headers.Authorization = options.authenticationScheme
-    //     ? `${options.authenticationScheme} ${token}`
-    //     : token;
-    // }
+    const token = userStore.getToken;
+    if (token && (config as Recordable)?.requestOptions?.withToken !== false) {
+      // jwt token
+      (config as Recordable).headers.Authorization = options.authenticationScheme
+        ? `${options.authenticationScheme} ${token}`
+        : token;
+    }
     return config;
   },
 
@@ -61,8 +63,19 @@ const transform: AxiosTransform = {
 
     //  这里 code，result，message为 后台统一的字段，需要在 types.ts内修改为项目自己的接口返回格式
     const { code, result, message } = data;
+    const hasSuccess = data && Reflect.has(data, 'code') && code === ResultEnum.SUCCESS;
+    if (hasSuccess) {
+      return result;
+    }
+    
     if (code !== ResultEnum.SUCCESS) {
       new Error('sys.api.apiRequestFailed');
+    }
+
+    return {
+      code,
+      result,
+      message
     }
   }
 };

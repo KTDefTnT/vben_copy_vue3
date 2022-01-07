@@ -26,8 +26,8 @@ export interface RequestOptions {
 }
 
 export interface Result<T = any> {
-  status: number;
-  // type: 'success' | 'error' | 'warning';
-  // message: string;
-  data: T;
+  code: number;
+  type: 'success' | 'error' | 'warning';
+  message: string;
+  result: T;
 }

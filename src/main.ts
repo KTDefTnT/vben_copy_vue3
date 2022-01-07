@@ -10,7 +10,7 @@ function bootStrap() {
   const app = createApp(App);
 
   // 初始化store  
-  // ! 需要放在router之前，router中的权限控制、menu等都依赖store
+  // ! 需要放在router之前，store登录后从后台获取routes，返回routes需要加入到统一routes中进行路由注册
   setupStore(app);
 
   // Configure routing 初始化路由

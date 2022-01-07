@@ -10,6 +10,8 @@ Object.keys(modules).forEach((key) => {
   routeModuleList.push(...modList);
 });
 
-export default [
+export const asyncRoutes = [...routeModuleList];
+
+export const basicRoutes = [
   ...routeModuleList
 ];

@@ -1,4 +1,4 @@
-import { defineConfig, searchForWorkspaceRoot } from "vite";
+import { defineConfig } from "vite";
 import vue from "@vitejs/plugin-vue";
 import { viteMockServe } from "vite-plugin-mock";
 import path from "path";
@@ -20,10 +20,10 @@ export default defineConfig({
   },
   resolve: {
     alias: {
-      src: path.resolve(__dirname, "src"),
-      core: path.resolve(__dirname, 'src/core'),
-      types: path.resolve(__dirname, "types"),
-      api: path.resolve(__dirname, "src/api"),
+      src: path.resolve(__dirname, "src/"),
+      core: path.resolve(__dirname, 'src/core/'),
+      types: path.resolve(__dirname, "types/"),
+      api: path.resolve(__dirname, "src/api/"),
     },
     extensions: ['.ts', '.js', '.tsx', '.vue']
   },

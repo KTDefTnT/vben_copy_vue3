@@ -2,12 +2,12 @@ import type { RouteRecordRaw } from 'vue-router';
 import type { App } from 'vue';
 
 import { createRouter, createWebHashHistory } from 'vue-router';
-import routes from './routes';
+import { basicRoutes } from './routes';
 
 // app router
 export const router = createRouter({
   history: createWebHashHistory(),
-  routes: routes as unknown as RouteRecordRaw[],
+  routes: basicRoutes as unknown as RouteRecordRaw[],
   strict: true,
   scrollBehavior: () => ({ left: 0, top: 0 }),
 });

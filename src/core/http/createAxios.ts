@@ -4,7 +4,9 @@ import type { CreateAxiosOptions } from './transformTyping';
 import { cloneDeep } from 'lodash-es';
 import { isFunction } from '../utils/is';
 import axios from 'axios';
-// import qs from 'qs';
+import qs from 'qs';
+import { ContentTypeEnum } from 'src/enums/httpEnum';
+import { RequestEnum } from 'src/enums/httpEnum';
 
 export class VAxios {
   // axios实例对象
@@ -75,6 +77,25 @@ export class VAxios {
       this.axiosInstance.interceptors.response.use(undefined, responseInterceptorsCatch)
   }
 
+  // support form-data
+  supportFormData(config: AxiosRequestConfig) {
+    const headers = config.headers || this.options.headers;
+    const contentType = headers?.['Content-Type'] || headers?.['content-type'];
+
+    if (
+      contentType !== ContentTypeEnum.FORM_URLENCODED ||
+      !Reflect.has(config, 'data') ||
+      config.method?.toUpperCase() === RequestEnum.GET
+    ) {
+      return config;
+    }
+
+    return {
+      ...config,
+      data: qs.stringify(config.data, { arrayFormat: 'brackets' }),
+    };
+  }
+
   /**
    * @description 请求函数封装
    * @config 默认传入 method，data等axios请求对象内容
@@ -99,6 +120,8 @@ export class VAxios {
 
     // 请求参数
     conf.requestOptions = opt;
+
+    conf = this.supportFormData(conf);
 
     // 发起请求
     return new Promise((resolve, reject) => {

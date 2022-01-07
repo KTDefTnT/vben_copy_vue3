@@ -9,11 +9,10 @@ Object.keys(modules).forEach((key) => {
   if (key.includes('/_')) {
     return;
   }
-  console.log(modules[key]);
+
   mockModules.push(...modules[key].default);
 });
 
-console.log('mockModules', mockModules);
 export function setupProdMockServer() {
   createProdMockServer([...mockModules])
 }
