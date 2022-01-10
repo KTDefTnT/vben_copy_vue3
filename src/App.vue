@@ -1,14 +1,12 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png" />
-  <router-view></router-view>
-  <!-- app -->
-  <button @click="handleLogin">登录</button>
+  <ConfigProvider>
+    <RouterView />
+  </ConfigProvider>
 </template>
 
 <script setup lang="ts">
 import { toRaw } from 'vue';
-// This starter template is using Vue 3 <script setup> SFCs
-// Check out https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup
+import { ConfigProvider } from 'ant-design-vue';
 import { onMounted } from "@vue/runtime-core";
 import { useUserStore } from "src/store/modules/user";
 import { usePermissionStore } from "src/store/modules/permission";
@@ -32,13 +30,13 @@ async function handleLogin() {
 }
 </script>
 
-<style>
+<style lang="less">
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
+  background: @content-bg;
 }
 </style>

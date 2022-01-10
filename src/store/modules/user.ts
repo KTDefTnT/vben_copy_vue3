@@ -16,6 +16,7 @@ interface UserState {
   roleList: RoleEnum[];
   sessionTimeout?: boolean;
   lastUpdateTime: number;
+  isLogin: boolean
 }
 
 export const useUserStore = defineStore({
@@ -31,6 +32,8 @@ export const useUserStore = defineStore({
     sessionTimeout: false,
     // 最新更新时间
     lastUpdateTime: 0,
+    // 是否已登录
+    isLogin: false
   }),
   getters: {
     getUserInfo(): UserInfo {
@@ -47,6 +50,9 @@ export const useUserStore = defineStore({
     },
     getLastUpdateTime(): number {
       return this.lastUpdateTime;
+    },
+    getIsLogin(): boolean {
+      return this.isLogin;
     }
   },
   actions: {
@@ -66,11 +72,15 @@ export const useUserStore = defineStore({
     setLastUpdateTime() {
       this.lastUpdateTime = new Date().getTime();
     },
+    setIsLogin(flag: boolean) {
+      this.isLogin = flag;
+    },
     resetState() {
       this.userInfo = null;
       this.token = '';
       this.roleList = [];
       this.sessionTimeout = false;
+      this.isLogin = false;
     },
     // * 用户登录
     async login(params: LoginParams & {
@@ -79,6 +89,7 @@ export const useUserStore = defineStore({
       try {
         const { goHome = true, ...loginParams } = params;
         const data = await loginApi(loginParams);
+        this.setIsLogin(true);
         const { token } = data;
         // 保存token，在请求拦截器中加入
         this.setToken(token);
@@ -131,6 +142,8 @@ export const useUserStore = defineStore({
       // 设置用户信息
       this.setUserInfo(userInfo);
       return userInfo;
-    }
+    },
+    // 用户注销
+    
   }
 });

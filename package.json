@@ -7,10 +7,11 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "ant-design-vue": "^2.2.8",
     "axios": "^0.24.0",
     "lodash-es": "^4.17.21",
     "pinia": "^2.0.9",
-    "vue": "^3.2.25",
+    "vue": "^3.2.21",
     "vue-router": "^4.0.12"
   },
   "devDependencies": {

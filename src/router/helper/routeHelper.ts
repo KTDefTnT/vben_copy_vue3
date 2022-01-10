@@ -2,13 +2,14 @@ import type { AppRouteModule, AppRouteRecordRaw } from 'src/router/types';
 import type { Router, RouteRecordNormalized } from 'vue-router';
 import { warn } from 'src/core/utils/log';
 import { cloneDeep, omit } from 'lodash-es';
-import { LAYOUT, IFRAME, EXCEPTION_COMPONENT } from 'src/router/constant';
+// EXCEPTION_COMPONENT IFRAME
+import { LAYOUT, getParentLayout } from 'src/router/constant';
 import { createRouter, createWebHashHistory } from 'vue-router';
 
 const LayoutMap = new Map<string, () => Promise<typeof import('*.vue')>>();
 
 LayoutMap.set('LAYOUT', LAYOUT);
-LayoutMap.set('IFRAME', IFRAME);
+// LayoutMap.set('IFRAME', IFRAME);
 
 let dynamicViewsModules: Record<string, () => Promise<Recordable>>;
 
@@ -57,6 +58,8 @@ function asyncImportRoute(routes: AppRouteRecordRaw[] | undefined) {
         route.component = dynamicImport(dynamicViewsModules, component as string);
       }
     } else if (name) {
+      // 获取父级
+      route.component = getParentLayout();
       console.log('name', name);
     }
 
@@ -95,7 +98,7 @@ function dynamicImport(
   } else {
     // 没有匹配 则没有创建文件夹
     warn('在src/views/下找不到`' + component + '.vue` 或 `' + component + '.tsx`, 请自行创建!');
-    return EXCEPTION_COMPONENT;
+    return LAYOUT;
   }
 }
 

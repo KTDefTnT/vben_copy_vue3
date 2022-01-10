@@ -27,6 +27,17 @@ export default defineConfig({
     },
     extensions: ['.ts', '.js', '.tsx', '.vue']
   },
+  css: {
+    preprocessorOptions: {
+      // 全局引入
+      less: {
+        modifyVars: {
+          hack: `true; @import (reference) "${path.resolve('src/design/config.less')}";`,
+        },
+        javascriptEnabled: true,
+      }
+    }
+  },
   build: {
     target: "es2015",
   }

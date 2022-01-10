@@ -37,7 +37,7 @@ export function filter<T = any>(
         // ! 深度遍历
         // 判断当前节点是否存在子节点，若存在子节点则继续遍历  获取返回的节点数据
         node[children] = node[children] && listFilter(node[children]);
-        // 返回复核筛选条件的数据, 若子节点存在符合条件的数据 则返回子节点
+        // 返回符合筛选条件的数据, 若子节点存在符合条件的数据 则返回子节点
         return callback(node) || (node[children] && node[children].length);
       });
   }

@@ -1,6 +1,6 @@
 <template>
   <div class="flex">
-    <div class="menu">content</div>
+    LayoutContent
     <RouterView></RouterView>
   </div>
 </template>
@@ -13,12 +13,5 @@ export default defineComponent({
 </script>
 
 <style scoped>
-.flex {
-  display: flex;
-  flex-direction: row;
-  
-}
-.menu {
-  width: 200px;
-}
+
 </style>
