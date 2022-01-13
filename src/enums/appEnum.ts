@@ -9,3 +9,9 @@
   // route mapping
   ROUTE_MAPPING = 'ROUTE_MAPPING',
 }
+
+// menu theme enum
+export enum ThemeEnum {
+  DARK = 'dark',
+  LIGHT = 'light',
+}

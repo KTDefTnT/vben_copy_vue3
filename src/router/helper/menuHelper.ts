@@ -1,6 +1,6 @@
 import { AppRouteModule, AppRouteRecordRaw, Menu } from 'src/router/types';
 import { isUrl } from 'src/core/utils/is';
-import { treeMap } from 'src/core/utils/helper/treeHelper';
+import { findPath, treeMap } from 'src/core/utils/helper/treeHelper';
 import { cloneDeep } from 'lodash-es';
 
 export function transformRouteToMenu(routeModList: AppRouteModule[], routerMapping = false) {
@@ -58,4 +58,12 @@ function joinParentPath(menus: Menu[], parentPath = '') {
       joinParentPath(menu.children, menu.meta?.hidePathForChildren ? parentPath : menu.path);
     }
   }
+}
+
+
+// 获取父级path
+export function getAllParentPath<T = Recordable>(treeData: T[], path?: string) {
+  const menus = findPath(treeData, node => node.path === path);
+  // 返回所有匹配菜单的path
+  return (menus && menus.map(item => item.path));
 }

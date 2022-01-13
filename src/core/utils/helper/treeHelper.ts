@@ -44,6 +44,37 @@ export function filter<T = any>(
   return listFilter(tree);
 }
 
+export function findPath<T = any>(
+  tree: any,
+  func: Function,
+  config: Partial<TreeHelperConfig> = {},
+): T | T[] | null {
+  config = getConfig(config);
+  const { children } = config; // 获取当前数的子节点属性值
+  const path: T[] = [];
+  const list = [...tree];
+  const visitedSet = new Set();
+
+  while(list.length) {
+    let node = list[0];
+    if (visitedSet.has(node)) {
+      // 删除当前的节点
+      path.pop();
+      list.shift(); // 头部开始
+    } else {
+      visitedSet.add(node);
+      // 开始寻找list的子节点元素
+      node[children!] && list.unshift(...node[children!]);
+      path.push(node);
+      if (func(node)) {
+        return path;
+      }
+    }
+  }
+
+  return null;
+}
+
 
 // 返回指定树形结构
 export function treeMap<T = any>(treeData: T[], opt: { children?: string; conversion: Function }): T[] {

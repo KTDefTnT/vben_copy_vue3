@@ -1,10 +1,9 @@
 <template>
-<div>
-  
-</div>
   <Sider>
     LayoutSiderBar
-    <LayoutMenu />
+    <LayoutMenu>
+      哈哈哈红红火火恍恍惚惚
+    </LayoutMenu>
   </Sider>
 </template>
 
