@@ -23,9 +23,7 @@ export default defineComponent({
     const menus = ref<Menu[]>([]);
     const permissionStore = usePermissionStore();
     watch(() => permissionStore.backMenuList, () => {
-      console.log(permissionStore.backMenuList);
       menus.value = permissionStore.backMenuList;
-      console.log('menu', menus);
     })
     // menus = toRefs(computed(() => permissionStore.backMenuList));
     return {
